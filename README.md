@@ -2,8 +2,13 @@
 This technical test requires you to design and implement a **Logs Ingestion and Viewing** backend using **Java Quarkus**. The backend will help manage incoming log entries, store them, and provide API endpoints to view and filter the logs.
 
 #### **Before You Begin**
-Create a private GitHub repository and invite the provided collaborators: `@korutx`, `@odtorres`. If you have any questions, contact `devtest@microboxlabs.io`.  
-**Title of the project**: Backend-Test-(Last Name)
+Fork this repository and invite the provided collaborators: `@korutx`, `@odtorres`. Should you have any questions, contact `devtest@microboxlabs.com`. 
+
+#### **Guidelines**
+
+- We provide a basic Quarkus project with a basic setup.
+- You can use any additional libraries or tools you see fit, but make sure to justify your choices.
+- Quarkus documentation is available [here](https://quarkus.io/guides/).
 
 #### **Problem Description**
 MicroboxLabs needs a backend system to help their engineering team efficiently manage incoming log entries from various microservices. The new system will provide REST API endpoints for **logs ingestion**, **storage**, and **viewing** by users. The backend will need to handle log parsing, storage, and filtering based on different criteria.
