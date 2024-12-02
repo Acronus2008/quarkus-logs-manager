@@ -1,7 +1,11 @@
 package com.microboxlabs.service.contract;
 
+import com.microboxlabs.service.contract.to.LogTO;
+import com.microboxlabs.service.contract.to.PaginatedTO;
 import com.microboxlabs.service.datasource.domain.Log;
 import com.microboxlabs.util.DateUtil;
+import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
+import io.quarkus.hibernate.orm.panache.PanacheQuery;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
@@ -24,4 +28,18 @@ public interface LogBinder {
     @Mapping(target = "message", expression = "java(source.group(4))")
     Log bindLog(Matcher source);
 
+    LogTO bind(Log source);
+
+    default LogTO bind(PanacheEntityBase source) {
+        var entity = (Log) source;
+        return bind(entity);
+    }
+
+    default PaginatedTO<LogTO> bindPaginated(PanacheQuery<PanacheEntityBase> source) {
+        var listSource = source.
+                stream()
+                .map(this::bind)
+                .toList();
+        return new PaginatedTO<>(listSource, source.page().index, source.page().size, source.count());
+    }
 }
