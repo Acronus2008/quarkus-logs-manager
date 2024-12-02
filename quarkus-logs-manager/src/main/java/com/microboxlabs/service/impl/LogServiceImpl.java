@@ -101,11 +101,16 @@ public class LogServiceImpl implements LogService {
             final var allLines = br.lines().toList();
             try (var executor = Executors.newVirtualThreadPerTaskExecutor()) {
                 final var batches = this.createBatches(allLines, this.batchSize);
-                batches.forEach(batch -> executor.submit(() -> batch.forEach(line -> {
-                    synchronized (lines) {
-                        lines.add(line);
-                    }
-                })));
+                batches.forEach(batch -> executor.submit(() -> {
+                    logger.info("Processing batch of size: {}", batch.size());
+                    batch.forEach(line -> {
+                        synchronized (lines) {
+                            lines.add(line);
+                        }
+                    });
+                }));
+            } catch (Exception e) {
+                logger.error("Error during batch processing", e);
             }
             return lines;
         } catch (IOException e) {
