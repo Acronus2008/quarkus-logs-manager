@@ -1,20 +1,28 @@
 package com.microboxlabs;
 
+import com.microboxlabs.service.contract.form.FileUploadForm;
 import io.quarkus.test.junit.QuarkusTest;
+import io.quarkus.test.security.TestSecurity;
 import org.junit.jupiter.api.Test;
 
+import java.io.ByteArrayInputStream;
+
 import static io.restassured.RestAssured.given;
-import static org.hamcrest.CoreMatchers.is;
 
 @QuarkusTest
 class GreetingResourceTest {
     @Test
-    void testHelloEndpoint() {
+    @TestSecurity(user = "admin", roles = {"admin"})
+    void testUploadLog() {
+        FileUploadForm form = new FileUploadForm();
+        form.setFile(new ByteArrayInputStream("test-log-file-content".getBytes())); // Mocked file content
+
         given()
-          .when().get("/hello")
-          .then()
-             .statusCode(200)
-             .body(is("Hello from Quarkus REST"));
+                .multiPart("file", "test.log", form.getFile())
+                .when()
+                .post("/api/logs/upload")
+                .then()
+                .statusCode(200);
     }
 
 }
