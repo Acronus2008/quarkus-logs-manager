@@ -1,4 +1,4 @@
-CREATE TABLE public.logs_users (
+CREATE TABLE  logs_users (
                                    id int8 NOT NULL,
                                    "password" varchar(255) NULL,
                                    "role" varchar(255) NULL,

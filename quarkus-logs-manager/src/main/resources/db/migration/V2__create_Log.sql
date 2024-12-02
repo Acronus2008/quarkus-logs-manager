@@ -1,10 +1,10 @@
-CREATE TABLE log (
-                       id int8 PRIMARY KEY,
-                       timestamp VARCHAR(50) NOT NULL UNIQUE,
-                       log_level VARCHAR(255) NOT NULL,
-                       service_name VARCHAR(255) NOT NULL,
-                       message VARCHAR(255) NOT NULL,
-                       created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+CREATE TABLE  log (
+                            created_at timestamp(6) DEFAULT CURRENT_TIMESTAMP NULL,
+                            id int8 PRIMARY KEY,
+                            "timestamp" timestamp(6) NOT NULL,
+                            log_level varchar(255) NOT NULL,
+                            message varchar(255) NOT NULL,
+                            service_name varchar(255) NOT NULL
 );
 
 CREATE INDEX idx_timestamp ON log (timestamp);
