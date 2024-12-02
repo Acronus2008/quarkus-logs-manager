@@ -1,4 +1,4 @@
-package com.microboxlabs;
+package com.microboxlabs.rest;
 
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
