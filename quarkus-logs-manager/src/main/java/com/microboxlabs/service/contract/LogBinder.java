@@ -2,6 +2,8 @@ package com.microboxlabs.service.contract;
 
 import com.microboxlabs.service.contract.to.LogTO;
 import com.microboxlabs.service.contract.to.PaginatedTO;
+import com.microboxlabs.service.contract.to.criteria.AdvanceCriteriaTO;
+import com.microboxlabs.service.datasource.criteria.LogCriteria;
 import com.microboxlabs.service.datasource.domain.Log;
 import com.microboxlabs.util.DateUtil;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
@@ -42,4 +44,6 @@ public interface LogBinder {
                 .toList();
         return new PaginatedTO<>(listSource, source.page().index, source.page().size, source.count());
     }
+
+    LogCriteria bind(AdvanceCriteriaTO source);
 }

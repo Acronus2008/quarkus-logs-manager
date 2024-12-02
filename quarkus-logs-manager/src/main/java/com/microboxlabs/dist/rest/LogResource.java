@@ -2,6 +2,7 @@ package com.microboxlabs.dist.rest;
 
 import com.microboxlabs.service.LogService;
 import com.microboxlabs.service.contract.form.FileUploadForm;
+import com.microboxlabs.service.contract.to.criteria.AdvanceCriteriaTO;
 import com.microboxlabs.service.contract.to.criteria.CriteriaTO;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.ws.rs.Consumes;
@@ -45,9 +46,8 @@ public class LogResource {
     }
 
     @GET
-    @Path("/")
+    @Path("")
     @RolesAllowed({"admin", "user"})
-    @Consumes(MediaType.MULTIPART_FORM_DATA)
     @Produces(MediaType.APPLICATION_JSON)
     public Response get(
             @QueryParam("page") @DefaultValue("0") int page,
@@ -55,7 +55,24 @@ public class LogResource {
     ) {
         try {
             logger.info("Perform api/logs/");
-            final var result = logService.findAll(new CriteriaTO(page, size));
+            final var result = logService.findAll(new CriteriaTO().withPage(page).withSize(size));
+            return Response
+                    .ok(result)
+                    .build();
+        } catch (Exception e) {
+            return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
+        }
+    }
+
+    @POST
+    @Path("/filter")
+    @RolesAllowed({"admin", "user"})
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response search(AdvanceCriteriaTO criteria) {
+        try {
+            logger.info("Perform api/logs/filter");
+            final var result = logService.findAll(criteria);
             return Response
                     .ok(result)
                     .build();

@@ -1,11 +1,10 @@
-package com.microboxlabs.service.contract.to.criteria;
+package com.microboxlabs.service.datasource.criteria;
 
-import jakarta.json.bind.annotation.JsonbProperty;
+import io.quarkus.hibernate.orm.panache.PanacheQuery;
 
 import java.util.Map;
 
-public class AdvanceCriteriaTO extends CriteriaTO {
-    @JsonbProperty
+public abstract class AdvanceCriteria<T> extends Criteria<T> {
     private Map<String, Object> fields;
 
     public Map<String, Object> getFields() {
@@ -15,4 +14,6 @@ public class AdvanceCriteriaTO extends CriteriaTO {
     public void setFields(Map<String, Object> fields) {
         this.fields = fields;
     }
+
+    public abstract PanacheQuery<T> query();
 }

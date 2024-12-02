@@ -1,6 +1,6 @@
-package com.microboxlabs.service.contract.to.criteria;
+package com.microboxlabs.service.datasource.criteria;
 
-public class CriteriaTO {
+public class Criteria<T> {
     private String search;
     private int page;
     private int size;
@@ -27,14 +27,5 @@ public class CriteriaTO {
 
     public void setSize(int size) {
         this.size = size;
-    }
-
-    public CriteriaTO withPage(int page) {
-        setPage(page);
-        return this;
-    }
-    public CriteriaTO withSize(int size) {
-        setSize(size);
-        return this;
     }
 }

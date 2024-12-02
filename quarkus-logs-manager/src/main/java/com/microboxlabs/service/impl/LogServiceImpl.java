@@ -3,11 +3,10 @@ package com.microboxlabs.service.impl;
 import com.microboxlabs.service.LogService;
 import com.microboxlabs.service.contract.to.LogTO;
 import com.microboxlabs.service.contract.to.PaginatedTO;
+import com.microboxlabs.service.contract.to.criteria.AdvanceCriteriaTO;
 import com.microboxlabs.service.contract.to.criteria.CriteriaTO;
 import com.microboxlabs.service.datasource.LogRepository;
 import com.microboxlabs.service.datasource.domain.Log;
-import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
-import io.quarkus.hibernate.orm.panache.PanacheQuery;
 import io.quarkus.panache.common.Page;
 import io.quarkus.panache.common.Sort;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -22,6 +21,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.Executors;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -54,10 +54,18 @@ public class LogServiceImpl implements LogService {
 
     @Override
     public PaginatedTO<LogTO> findAll(CriteriaTO criteria) {
-        PanacheQuery<PanacheEntityBase> query = Log
+        final var query = Log
                 .findAll(Sort.by("timestamp").descending())
                 .page(Page.of(criteria.getPage(), criteria.getSize()));
         return LOG_BINDER.bindPaginated(query);
+    }
+
+    @Override
+    public PaginatedTO<LogTO> findAll(AdvanceCriteriaTO criteria) {
+        if (Objects.isNull(criteria.getFields()) || criteria.getFields().isEmpty())
+            return this.findAll(new CriteriaTO().withPage(criteria.getPage()).withSize(criteria.getSize()));
+        final var filter = LOG_BINDER.bind(criteria);
+        return LOG_BINDER.bindPaginated(filter.query());
     }
 
 
