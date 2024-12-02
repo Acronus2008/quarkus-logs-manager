@@ -1,5 +1,4 @@
-
-CREATE SEQUENCE public.users_seq
+CREATE SEQUENCE public.log_seq
     INCREMENT BY 1
     MINVALUE 1
     MAXVALUE 9223372036854775807
@@ -7,7 +6,7 @@ CREATE SEQUENCE public.users_seq
 	CACHE 1
 	NO CYCLE;
 
-CREATE SEQUENCE public.user_roles_seq
+CREATE SEQUENCE public.logs_users_seq
     INCREMENT BY 1
     MINVALUE 1
     MAXVALUE 9223372036854775807
