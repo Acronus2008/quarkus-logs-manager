@@ -75,7 +75,7 @@ class LogResourceTest {
                 .post("/api/logs/filter")
                 .then()
                 .statusCode(200)
-                .body("data.size()", is(9));
+                .body("data.size()", is(10));
     }
 
     @Test
