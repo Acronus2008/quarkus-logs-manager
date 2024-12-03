@@ -1,6 +1,7 @@
 package com.microboxlabs.mock;
 
 import com.microboxlabs.service.contract.to.LogTO;
+import com.microboxlabs.util.DateUtil;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -12,7 +13,7 @@ public class LogTOMock {
         logTO.setLogLevel(logLevel);
         logTO.setServiceName(serviceName);
         logTO.setMessage(message);
-        logTO.setTimestamp(timestamp);
+        logTO.setTimestamp(DateUtil.convertAWSEventTOString.apply(timestamp));
         return logTO;
     }
 
