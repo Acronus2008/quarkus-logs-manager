@@ -30,6 +30,7 @@ public interface LogBinder {
     @Mapping(target = "message", expression = "java(source.group(4))")
     Log bindLog(Matcher source);
 
+    @Mapping(target = "timestamp", expression = "java(DateUtil.convertAWSEventTOString.apply(source.getTimestamp()))")
     LogTO bind(Log source);
 
     default LogTO bind(PanacheEntityBase source) {

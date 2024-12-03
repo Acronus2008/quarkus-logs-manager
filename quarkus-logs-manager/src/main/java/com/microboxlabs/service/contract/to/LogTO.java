@@ -12,7 +12,7 @@ public class LogTO implements Serializable {
     private static final long serialVersionUID = 4762121180300891133L;
 
     private Long id;
-    private LocalDateTime timestamp;
+    private String timestamp;
     private String logLevel;
     private String serviceName;
     private String message;
@@ -25,11 +25,11 @@ public class LogTO implements Serializable {
         this.id = id;
     }
 
-    public LocalDateTime getTimestamp() {
+    public String getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(LocalDateTime timestamp) {
+    public void setTimestamp(String timestamp) {
         this.timestamp = timestamp;
     }
 
