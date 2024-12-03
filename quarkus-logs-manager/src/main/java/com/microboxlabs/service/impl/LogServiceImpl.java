@@ -1,6 +1,5 @@
 package com.microboxlabs.service.impl;
 
-import com.microboxlabs.dist.stream.KafkaLogProducer;
 import com.microboxlabs.service.LogService;
 import com.microboxlabs.service.contract.to.LogTO;
 import com.microboxlabs.service.contract.to.PaginatedTO;
@@ -36,23 +35,19 @@ public class LogServiceImpl implements LogService {
 
     private static final String LOG_REGEX = "\\[(.*?)\\] \\[(INFO|ERROR|WARNING)\\] ([A-Za-z0-9\\-]+): (.*)";
     private final LogRepository logRepository;
-    private final KafkaLogProducer kafkaLogProducer;
     private final int batchSize;
 
     public LogServiceImpl(
             LogRepository logRepository,
-            KafkaLogProducer kafkaLogProducer,
             @ConfigProperty(name = "application.logs.batch.adjust") int batchSize
     ) {
         this.logRepository = logRepository;
-        this.kafkaLogProducer = kafkaLogProducer;
         this.batchSize = batchSize;
     }
 
     @Override
     public void parseAndSaveLogs(InputStream file) {
         final var lines = readFileLogLines(file);
-        lines.forEach(line -> this.kafkaLogProducer.sendLog(null, line));
         final var logs = this.parseLogs(lines);
         this.performBatchProcessor(logs);
     }

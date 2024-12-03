@@ -16,10 +16,6 @@ If you want to learn more about Quarkus, please visit its website: <https://quar
 ./run.sh
 ```
 
-## Kafka default log topic
-This approach send to **log** kafka topic each log received in a content file.
-If you want to stream or process the logs using a Kafka Consumer please create a consumer to **localhost:9092**, and you'll see the processed logs. 
-
 ## SSE
 To stream the logs using SSE approach you need to connect you application to *http://localhost:8080/stream/logs/subscribe*
 ```shell script
