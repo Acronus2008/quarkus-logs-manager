@@ -14,6 +14,7 @@ import jakarta.ws.rs.sse.OutboundSseEvent;
 import jakarta.ws.rs.sse.Sse;
 import jakarta.ws.rs.sse.SseBroadcaster;
 import jakarta.ws.rs.sse.SseEventSink;
+import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,6 +26,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import static com.microboxlabs.util.DateUtil.instantFormatter;
 
 @ApplicationScoped
+@Tag(name = "Log SSE", description = "Endpoints to manage log stream")
 @Path("/stream")
 public class LogSse {
     private static final Logger logger = LoggerFactory.getLogger(LogSse.class);
